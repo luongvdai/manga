@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!DOCTYPE html>
+  <html lang="vi">
+    <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+      <!-- Thêm Bootstrap CSS -->
+      <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+      />
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"
+      />
+      <!-- Thêm thư viện jQuery -->
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+      <!-- Thêm thư viện Select2 -->
+      <link
+        href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-rc.0/css/select2.min.css"
+        rel="stylesheet"
+      />
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-rc.0/js/select2.min.js"></script>
+
+      <!-- Thêm Bootstrap JS -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.0/js/bootstrap.min.js"></script>
+      <!-- Thêm thư viện toastr.js -->
+      <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"
+      />
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+      <script src="./site.js"></script>
+      <title>Chapter 1 - Truyện tranh</title>
+    </head>
+    <style>
+      .page {
+        border: 1px solid black;
+      }
+      img {
+        max-width: 100%;
+        height: auto;
+      }
+    </style>
+    <body>
+      <header>
+        <nav
+          class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow sticky-top"
+        >
+          <div class="container-fluid">
+            <a
+              class="navbar-brand"
+              asp-area=""
+              asp-controller="Home"
+              asp-action="Index"
+              >Client</a
+            >
+            <button
+              class="navbar-toggler"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target=".navbar-collapse"
+              aria-controls="navbarSupportedContent"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div
+              class="navbar-collapse collapse d-sm-inline-flex justify-content-between"
+            >
+              <ul class="navbar-nav flex-grow-1">
+                <li class="nav-item">
+                  <a
+                    class="nav-link text-dark"
+                    asp-area=""
+                    asp-controller="Home"
+                    asp-action="Index"
+                    >Trang chủ</a
+                  >
+                </li>
+                <li class="nav-item ms-lg-3">
+                  <div class="search navbar-text">
+                    <button class="btnSearch">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="icon icon-tabler icon-tabler-search"
+                        width="20"
+                        height="20"
+                        viewBox="2 2 24 24"
+                        stroke-width="2"
+                        stroke="currentColor"
+                        fill="none"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      >
+                        <path
+                          stroke="none"
+                          d="M0 0h24v24H0z"
+                          fill="none"
+                        ></path>
+                        <path
+                          d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"
+                        ></path>
+                        <path d="M21 21l-6 -6"></path>
+                      </svg>
+                    </button>
+                    <input
+                      type="search"
+                      placeholder="Tìm truyện"
+                      name=""
+                      id=""
+                    />
+                  </div>
+                </li>
+              </ul>
+              <ul class="navbar-nav">
+                <li class="nav-item">
+                  <a
+                    class="nav-link text-dark"
+                    asp-area=""
+                    asp-controller="Home"
+                    asp-action="Index"
+                    >Đăng nhập</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a
+                    class="nav-link text-dark"
+                    asp-area=""
+                    asp-controller="Home"
+                    asp-action="Privacy"
+                    >Đăng ký</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+        <div class="Category px-5 py-2">
+          <ul class="nav">
+            <li class="nav-item">
+              <a class="nav-link text-dark" aria-current="page" href="#"
+                >Hành động</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-dark" href="#">Ngôn tình</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-dark" href="#">Xuyên không</a>
+            </li>
+          </ul>
+        </div>
+      </header>
+      <nav
+        class="navbar navbar-expand-lg navbar-light bg-light-subtle sticky-lg-top opacity-75"
+      >
+        <div class="container">
+          <a class="navbar-brand" href="#">One Punch man</a>
+
+          <div>
+            <ul class="navbar-nav ms-auto">
+              <li class="nav-item">
+                <button class="btn btn-danger">
+                  <i class="ti ti-math-lower"></i>
+                </button>
+              </li>
+              <li class="nav-item mx-2">
+                <select class="form-select" title="Chọn chương" id="select">
+                  <option selected>Chọn chương</option>
+                  <option value="1">One</option>
+                  <option value="2">Two</option>
+                  <option value="3">Three</option>
+                  <option value="1">One</option>
+                  <option value="2">Two</option>
+                  <option value="3">Three</option>
+                  <option value="1">One</option>
+                  <option value="2">Two</option>
+                  <option value="3">Three</option>
+                  <option value="1">One</option>
+                  <option value="2">Two</option>
+                  <option value="3">Three</option>
+                  <option value="1">One</option>
+                  <option value="2">Two</option>
+                  <option value="3">Three</option>
+                  <option value="1">One</option>
+                  <option value="2">Two</option>
+                  <option value="3">Three</option>
+                </select>
+              </li>
+              <li class="nav-item">
+                <button class="btn btn-danger">
+                  <i class="ti ti-math-greater"></i>
+                </button>
+              </li>
+            </ul>
+          </div>
+          <button id="follow" class="btn btn-success">
+            <i class="ti ti-bookmark"></i>
+            Theo dõi
+          </button>
+          <button id="unfollow" class="btn btn-outline-danger text-wrap">
+            <i class="ti ti-x"></i>Bỏ theo dõi
+          </button>
+        </div>
+      </nav>
+      <div class="container">
+        <h1 class="text-center my-5">Chapter 1 - Truyện tranh</h1>
+
+        <div
+          class="d-flex flex-column align-items-center align-content-center gap-2"
+        >
+          <div class="page">
+            <img
+              src="https://truyentuan.com/manga2/onepunch-man/233/01.jpg"
+              class="img-fluid"
+              alt="Ảnh 1"
+            />
+          </div>
+          <div class="page">
+            <img
+              src="https://truyentuan.com/manga2/onepunch-man/233/02.jpg"
+              class="img-fluid"
+              alt="Ảnh 2"
+            />
+          </div>
+          <div class="page">
+            <img
+              src="https://truyentuan.com/manga2/onepunch-man/233/03.jpg"
+              class="img-fluid"
+              alt="Ảnh 3"
+            />
+          </div>
+          <div class="page">
+            <img
+              src="https://truyentuan.com/manga2/onepunch-man/233/15.jpg"
+              class="img-fluid"
+              alt="Ảnh 3"
+            />
+          </div>
+          <div class="page">
+            <img
+              src="https://truyentuan.com/manga2/onepunch-man/233/05.jpg"
+              class="img-fluid"
+              alt="Ảnh 3"
+            />
+          </div>
+          <div class="page">
+            <img
+              src="https://truyentuan.com/manga2/onepunch-man/233/06.jpg"
+              class="img-fluid"
+              alt="Ảnh 3"
+            />
+          </div>
+          <div class="page">
+            <img
+              src="https://truyentuan.com/manga2/onepunch-man/233/07.jpg"
+              class="img-fluid"
+              alt="Ảnh 3"
+            />
+          </div>
+          <div class="page">
+            <img
+              src="https://truyentuan.com/manga2/onepunch-man/233/08.jpg"
+              class="img-fluid"
+              alt="Ảnh 3"
+            />
+          </div>
+          <div class="page">
+            <img
+              src="https://truyentuan.com/manga2/onepunch-man/233/09.jpg"
+              class="img-fluid"
+              alt="Ảnh 3"
+            />
+          </div>
+          <div class="page">
+            <img
+              src="https://truyentuan.com/manga2/onepunch-man/233/10.jpg"
+              class="img-fluid"
+              alt="Ảnh 3"
+            />
+          </div>
+          <div class="page">
+            <img
+              src="https://truyentuan.com/manga2/onepunch-man/233/11.jpg"
+              class="img-fluid"
+              alt="Ảnh 3"
+            />
+          </div>
+          <div class="page">
+            <img
+              src="https://truyentuan.com/manga2/onepunch-man/233/12.jpg"
+              class="img-fluid"
+              alt="Ảnh 3"
+            />
+          </div>
+          <!-- Thêm các ảnh khác vào đây -->
+        </div>
+      </div>
+    </body>
+  </html>
+</html>
+<script>
+  $("#select").select2({
+    dropdownCssClass: "select2-dropdown",
+  });
+</script>

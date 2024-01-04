@@ -1,0 +1,199 @@
+﻿@model PRN231_API.Models.User
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<div class="container pt-4">
+    <div class="Profile bg-light mt-5 rounded-3 p-3"
+      style="min-height: 75vh; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px">
+      <h4 class="mb-3 py-3 text-uppercase border-bottom border-dark">
+        Thông tin
+      </h4>
+      <div class="row">
+        <div class="col-4">
+          <div class="list-group" id="list-tab" role="tablist">
+            <a class="list-group-item list-group-item-action active" id="list-follow-list" data-bs-toggle="list"
+              href="#list-follow" role="tab" aria-controls="list-follow">Truyện đã theo dõi</a>
+            <a class="list-group-item list-group-item-action" id="changePassword-list" data-bs-toggle="list"
+              href="#changePassword" role="tab" aria-controls="changePassword">Đổi mật khẩu</a>
+            <a class="list-group-item list-group-item-action" id="list-comics-list" data-bs-toggle="list"
+              href="#list-comics" role="tab" aria-controls="list-comics">Truyện đã đăng</a>
+          </div>
+        </div>
+        <div class="col-8">
+          <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="list-follow" role="tabpanel"
+              aria-labelledby="list-follow-list">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Tên truyện</th>
+                    <th scope="col">Hành động</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @foreach (var item in @Model.ComicsNavigation?.ToList())
+                  {
+                  <tr>
+                    <th>@item.ComicId</th>
+                    <td>@item.ComicName</td>
+                    <td>
+                      <button id="#unfollow" class="btn btn-outline-danger">Bỏ theo dõi</button>
+                    </td>
+                  </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+              <div class="tab-pane fade" id="changePassword" role="tabpanel" aria-labelledby="changePassword-list">
+              <div class="w-75">
+                <span>Mật khẩu cũ</span>
+                <input class="form-control" type="password" name="oldPassword" /><br />
+                <span>Mật khẩu mới</span>
+                <input class="form-control" type="password" name="newPassword" /><br />
+                <span>Nhập lại mật khẩu mới</span>
+                <input class="form-control" type="password" name="reNewPassword" /><br />
+                <input id="changePassword" class="btn btn-success" type="submit" value="Cập nhật" />
+
+                <div class="alert alert-success w-50 mt-3 d-none" role="alert" id="confirm"></div>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="list-comics" role="tabpanel" aria-labelledby="list-comics-list">
+              @if(Model.Role == "Author")
+              {
+
+              <div class="Author">
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary my-3" data-bs-toggle="modal" data-bs-target="#addNewComic">
+                  Thêm truyện mới
+                </button>
+
+                <!-- Modal -->
+                <div id="addComic">
+                  <div class="modal fade" id="addNewComic" tabindex="-1" aria-labelledby="addNewComicLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h1 class="modal-title fs-5" id="addNewComicLabel">
+                            Thêm truyện mới
+                          </h1>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                          <div>
+                            <div class="mb-3">
+                              <label for="comicTitle" class="form-label">Tiêu đề</label>
+                              <input name="comicTitle" type="text" class="form-control" id="comicTitle" />
+                            </div>
+                            <div class="mb-3">
+                              <label for="comicSummary" class="form-label">Tóm tắt</label>
+                              <textarea class="form-control" id="comicSummary" rows="3"></textarea>
+                            </div>
+                            <div class="mb-3">
+                              <label for="comicFile" class="form-label">Hình ảnh</label>
+                              <input name="comicFile" class="form-control" type="file" id="comicFile" />
+                            </div>
+                            <div class="mb-3">
+                              <label for="comicCategory" class="form-label">Thể loại</label>
+                              <select name="comicCategory" id="comicCategory" class="form-control w-50"
+                                multiple></select>
+                            </div>
+                            <div class="mb-3">
+                              <div class="alert alert-success w-50 d-none" role="alert" id="comicConfirm"></div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            Close
+                          </button>
+                          <button type="button" class="btn btn-primary">
+                            Thêm
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Tên truyện</th>
+                      <th scope="col">Số lượng</th>
+                      <th scope="col">Hành động</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @foreach (var item in @Model.Comics?.ToList())
+                    {
+                    <tr>
+                      <th>@item.ComicId</th>
+                      <td>@item.ComicName</td>
+                      <td>@item.Chapters.Count()</td>
+                      <td>
+                        <button class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#addNewChapter"
+                          data-bs-comicId="@item.ComicId">
+                          Thêm chapter mới
+                        </button>
+                      </td>
+                    </tr>
+                    }
+                  </tbody>
+                </table>
+                <div class="modal fade" id="addNewChapter" tabindex="-1" aria-labelledby="addNewChapterLabel"
+                  aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="addNewChapterLabel">
+                          Thêm chapter mới
+                        </h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <form>
+                          <div class="mb-3">
+                            <label for="chapterNumber" class="col-form-label">Chapter:</label>
+                            <input name="chapterNumber" type="number" min="0" class="form-control" id="chapterNumber" />
+                          </div>
+                          <div class="mb-3">
+                            <label for="chapterImage" class="col-form-label">Hình ảnh:</label>
+                            <input name="chapterImage" class="form-control" type="file" id="chapterImage" multiple />
+                          </div>
+                          <div class="mb-3">
+                            <div class="alert alert-success w-50 d-none" role="alert" id="chapterConfirm"></div>
+                        </form>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                          Đóng
+                        </button>
+                        <button id="addChapter" type="button" class="btn btn-primary">
+                          Thêm chapter
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              }
+              else
+              {
+              <div class="user d-flex justify-content-center">
+                <button class="btn btn-success">Đăng ký làm tác giả</button>
+                <div class="mb-3">
+                  <label for="formFile" class="form-label">Chọn ảnh đại diện</label>
+                  <input class="form-control" type="file" id="formFile" accept=".jpg, .jpeg, .png" multiple />
+                </div>
+              </div>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,226 @@
+﻿@model IEnumerable<PRN231_API.Models.Comic>
+@{
+    ViewData["Title"] = "Home Page";
+}
+<div class="listManga container">
+    <div class="bg-light py-3 px-4 mt-5 rounded-3 position-relative"
+         id="index-item-0">
+        <h4 class="mb-3 py-3 text-uppercase border-bottom border-dark">
+            mới cập nhật
+        </h4>
+        <div class="d-flex flex-wrap gap-3">
+            @foreach(var item in @Model)
+            {
+                <div class="card border-0"
+                style="
+                width: 11.5rem;
+                min-height: 300px;
+                box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px,
+                  rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
+              ">
+                    @{
+                        string imgData = Convert.ToBase64String(item.Image);
+                    }
+                    <img src="@string.Format("data:image/jpeg;base64,{0}", imgData)"
+                     class="card-img-top object-fit-fill"
+                     style="
+                  min-height: 200px;
+                  height: 200px;
+                  max-height: 200px;
+                  background-color: antiquewhite;
+                "
+                     alt="loading..." />
+                <div class="p-1">
+                    <div class="card-body p-0">
+                        <h5 class="card-title"
+                            style="
+                      max-width: 200px;
+                      white-space: nowrap;
+                      overflow: hidden;
+                      text-overflow: ellipsis;
+                    ">
+                            <a class="text-dark text-decoration-none" asp-controller="Comics" asp-action="index" asp-route-ComicId="@item.ComicId">@item.ComicName</a>
+                            
+                        </h5>
+                    </div>
+                    <ul class="list-group p-0 list-group-flush">
+                       @foreach(var chap in item.Chapters.OrderByDescending(o => o.ChapterNumber).Take(3).ToList()){
+                            <li class="list-group-chapter p-0 border-0">
+                            <a class="text-dark text-decoration-none" asp-controller="Comics" asp-action="Chapter" asp-route-ComicId="@item.ComicId" asp-route-chapterId="@chap.ChapterId">Chapter @chap.ChapterNumber</a>
+                            <small class="text-body-secondary text-muted">@chap.PublicDate.ToString("dd/MM/yyyy")</small>
+                        </li>
+                       }
+                        
+                    </ul>
+                </div>
+            </div>
+            }
+        </div>
+        <nav aria-label="Page" class="">
+            <ul class="pagination mt-3 justify-content-center">
+
+            </ul>
+        </nav>
+    </div>
+    <div class="bg-light m-5 rounded-3"
+         style="max-height: 800px"
+         id="index-item-1">
+        <h4 class="m-3 py-3 text-uppercase border-bottom border-dark">
+            nổi bật 
+        </h4>
+
+@*        <div class="container">
+            <div class="noibat">
+                @foreach (var popular in ViewBag.popular)
+                {
+                    <div class="card mb-3 border-0 border-bottom"
+                         style="max-width: 540px">
+                        <div class="row g-0">
+                            <div class="col-md-4">
+                                @{
+                                    string imgData = Convert.ToBase64String(popular.MangaImage);
+                                    var image = string.Format("data:image/jpeg;base64,{0}", imgData);
+                                }
+                                <img class="img-fluid object-fit-fill"
+                                     src="@image"
+                                     style="
+                        min-height: 100px;
+                        height: 100px;
+                        min-width: 100px;
+                        background-color: antiquewhite;
+                      "
+                                     alt="loading..." />
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title"
+                                        style="
+                          max-width: 200px;
+                          white-space: nowrap;
+                          overflow: hidden;
+                          text-overflow: ellipsis;
+                        ">
+                                        <a class="text-dark text-decoration-none" asp-controller="Manga" asp-action="index" asp-route-mangaId="@popular.MangaId">@popular.MangaName</a>
+                                    </h5>
+                                    <p class="card-text m-0">@popular.TotalChapter</p>
+                                    <p class="card-text">
+                                        <small class="text-body-secondary">Last updated 3 mins ago</small>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>*@
+@*    <div class="my-5 bg-light rounded-3" id="index-item-2">
+        <h4 class="m-3 p-1 w-75 text-uppercase border-bottom border-dark">
+            Tác giả
+        </h4>
+        <div class="container">
+            <div class="lstAuthor w-75">
+                @foreach (var author in ViewBag.Author)
+                {
+                    <div class="card my-3 border-0 border-bottom">
+                        <div class="row g-0">
+                            <div class="col-4">
+                                @{
+                                    var image = "";
+                                    if (author.Avatar != null)
+                                    {
+                                        var imgData = Convert.ToBase64String(author.Avatar);
+                                        image = string.Format("data:image/jpeg;base64,{0}", imgData);
+                                    }
+                                    else image = Url.Content("~/img/avatar.jpg");
+
+                                }
+                                <img class="img-fluid object-fit-fill rounded-circle"
+                                     src="@image"
+                                     style="
+                        min-height: 100px;
+                        height: 100px;
+                        min-width: 100px;
+                        max-width: 100px;
+                        background-color: antiquewhite;
+                        border-radius: 50%;
+                      "
+                                     alt="loading..." />
+                            </div>
+                            <div class="col-8 d-flex align-items-center">
+                                <div class="card-body">
+                                    <h5 class="card-title text-truncate mb-0"
+                                        style="max-width: 200px">Tên tác giả @author.UserName</h5>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <p class="card-text m-0">@author.Mangas.Count Truyện đã đăng</p>
+                                        <small class="text-muted">Last updated 3 mins ago</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>*@
+</div>
+  <script>
+    let params = new URLSearchParams(window.location.search);
+    let CurrentPage = parseInt(params.get("page")) || 1;
+    let TotalPage;
+    $(document).ready(async function () {
+      TotalPage = await getTotalPages();
+      ShowAllPages();
+      async function getTotalPages() {
+        var result = await $.ajax({
+          url: "http://localhost:5278/api/Comics/totalPage",
+          type: "get",
+          contentType: "application/json; charset=utf-8",
+          dataType: "json",
+        });
+        return parseInt(result);
+      }
+      function ShowAllPages() {
+        $(".pagination").empty();
+        params.set("page", Math.max(1, CurrentPage - 1));
+        $(".pagination").append(
+          $('<li class="page-item">').addClass(CurrentPage == 1 ? "disabled" : "").append(
+            $('<a class="page-link" href="?' + params.toString() + '">')
+              .html("Previous")
+          )
+        );
+        for (var i = 1; i <= TotalPage; i++) {
+          params.set("page", i);
+          var appendElement = $(".pagination")
+            .append(
+              $('<li class="page-item">').addClass(CurrentPage == i ? "active" : "").append(
+                $('<a class="page-link" href="?' + params.toString() + '">')
+                  .html(i)
+              )
+            )
+            .last();
+        }
+        params.set("page", Math.min(TotalPage, CurrentPage + 1));
+        $(".pagination").append(
+          $('<li class="page-item">').addClass(CurrentPage == TotalPage ? "disabled" : "").append(
+            $('<a class="page-link" href="?' + params.toString() + '">')
+              .html("Next")
+          )
+        );
+        $(".page-link").on("click", function (e) {
+          e.preventDefault();
+          if ($(this).html() === "Previous") {
+            CurrentPage = Math.max(1, CurrentPage - 1);
+          } else if ($(this).html() === "Next") {
+            CurrentPage = Math.min(TotalPage, CurrentPage + 1);
+          } else {
+            CurrentPage = parseInt($(this).html());
+          }
+          params.set("page", CurrentPage);
+          window.location.search = params.toString();
+        });
+      }
+    });
+  </script>

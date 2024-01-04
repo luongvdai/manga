@@ -1,0 +1,333 @@
+﻿@model PRN231_API.Models.Comic
+@using PRN231_API.Models
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    var user = HttpContextAccessor.HttpContext.Session.GetObjectFromJson<User>("user");
+}
+      <div class="container pt-5">
+        <div class="detail-manga">
+          <div id="detail-item-0" class="bg-light rounded-4 p-3">
+            <h4 class="mb-3 py-3 text-uppercase border-bottom border-dark">
+              @Model.ComicName
+            </h4>
+            <div class="detail container pe-0">
+              <div class="d-flex" style="min-height: 50vh">
+                <div id="detail-item-0_0">
+                    @{
+                        string imgData = Convert.ToBase64String(@Model.Image);
+                    }
+                  <img
+                    src="@string.Format("data:image/jpeg;base64,{0}", imgData)"
+                    class="img-fluid object-fit-cover rounded-2"
+                    style="
+                      background-color: antiquewhite;
+                      min-height: 40vh;
+                      min-width: 30vh;
+                      box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+                    "
+                    alt="loading..."
+                  />
+                </div>
+                <div id="detail-item-0_1">
+                  <table class="table table-borderless bg-transparent w-100">
+                    <tbody>
+                      <tr>
+                        <th scope="col">Tên truyện:</th>
+                        <td>@Model.ComicName</td>
+                      </tr>
+                      <tr>
+                        <th scope="col">Thể loại:</th>
+                        <td class="gap-2 d-flex flex-wrap">
+                            @foreach(var category in @Model.Categories){
+                          <a href="#" class="btn btn-dark p-1">@category.CategoryName</a>
+                            }
+                        </td>
+                      </tr>
+                      <tr>
+                        <th scope="col">Tác giả:</th>
+                        <td>@Model.User?.Email</td>
+                      </tr>
+                      <tr>
+                        <th scope="col">Đánh giá:</th>
+                        <td>5.0</td>
+                      </tr>
+                      <tr>
+                        <th scope="col">Ngày ra mắt:</th>
+                        <td>@Model.PublicDate.ToString("dd/MM/yyyy")</td>
+                      </tr>
+                      <tr>
+                        <th scope="col">Tình trạng:</th>
+                        @if(Model.IsActive){
+                        <td>Còn tiếp</td>
+                        }else{
+                        <td>Hết</td>
+                        }
+                      </tr>
+                      <tr>
+                        <th scope="col">
+                          <button class="btn btn-outline-primary text-nowrap">
+                            Đọc truyện
+                          </button>
+                        </th>
+                        <td id="loadFollow">
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div
+                id="detail-item-0_2"
+                class="p-2 bg-light"
+                style="text-align: justify"
+              >
+                <h5 class="mb-3 py-3 text-uppercase border-bottom border-dark">
+                  Tóm tắt
+                </h5>
+              @Model.Summary
+              </div>
+            </div>
+          </div>
+          <div
+            class="bg-light mx-4 rounded-4"
+            style="max-height: 800px"
+            id="detail-item-1"
+          >
+            <h4 class="m-3 py-3 text-uppercase border-bottom border-dark">
+              Cùng tác giả
+            </h4>
+
+            <div class="container">
+              <div class="noibat">
+                <div
+                  class="card mb-3 border-0 border-bottom"
+                  style="max-width: 540px"
+                >
+                  <div class="row g-0">
+                    <div class="col-md-4">
+                      <img
+                        class="img-fluid object-fit-fill"
+                        src="./12.PNG"
+                        style="
+                          min-height: 100px;
+                          height: 100px;
+                          min-width: 100px;
+                          background-color: antiquewhite;
+                        "
+                        alt="loading..."
+                      />
+                    </div>
+                    <div class="col-md-8">
+                      <div class="card-body">
+                        <h5
+                          class="card-title"
+                          style="
+                            max-width: 200px;
+                            white-space: nowrap;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                          "
+                        >
+                          Card title loadofgjdaairo
+                        </h5>
+                        <p class="card-text m-0">1002 Chapters</p>
+                        <p class="card-text">
+                          <small class="text-body-secondary"
+                            >Last updated 3 mins ago</small
+                          >
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="card mb-3 border-0 border-bottom"
+                  style="max-width: 540px"
+                >
+                  <div class="row g-0">
+                    <div class="col-md-4">
+                      <img
+                        class="img-fluid object-fit-fill"
+                        src="./test.jpg"
+                        style="
+                          min-height: 100px;
+                          height: 100px;
+                          min-width: 100px;
+                          background-color: antiquewhite;
+                        "
+                        alt="loading..."
+                      />
+                    </div>
+                    <div class="col-md-8">
+                      <div class="card-body">
+                        <h5
+                          class="card-title"
+                          style="
+                            max-width: 200px;
+                            white-space: nowrap;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                          "
+                        >
+                          Card title loadofgjdaairo
+                        </h5>
+                        <p class="card-text m-0">1002 Chapters</p>
+                        <p class="card-text">
+                          <small class="text-body-secondary"
+                            >Last updated 3 mins ago</small
+                          >
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="card mb-3 border-0 border-bottom"
+                  style="max-width: 540px"
+                >
+                  <div class="row g-0">
+                    <div class="col-md-4">
+                      <img
+                        class="img-fluid object-fit-cover"
+                        src="./142.PNG"
+                        style="
+                          min-height: 100px;
+                          height: 100px;
+                          min-width: 100px;
+                          background-color: antiquewhite;
+                        "
+                        alt="loading..."
+                      />
+                    </div>
+                    <div class="col-md-8">
+                      <div class="card-body">
+                        <h5
+                          class="card-title"
+                          style="
+                            max-width: 200px;
+                            white-space: nowrap;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                          "
+                        >
+                          Card title loadofgjdaairo
+                        </h5>
+                        <p class="card-text m-0">1002 Chapters</p>
+                        <p class="card-text">
+                          <small class="text-body-secondary"
+                            >Last updated 3 mins ago</small
+                          >
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="card mb-3 border-0 border-bottom"
+                  style="max-width: 540px"
+                >
+                  <div class="row g-0">
+                    <div class="col-md-4">
+                      <img
+                        class="img-fluid object-fit-cover"
+                        src="./142.PNG"
+                        style="
+                          min-height: 100px;
+                          height: 100px;
+                          min-width: 100px;
+                          background-color: antiquewhite;
+                        "
+                        alt="loading..."
+                      />
+                    </div>
+                    <div class="col-md-8">
+                      <div class="card-body">
+                        <h5
+                          class="card-title"
+                          style="
+                            max-width: 200px;
+                            white-space: nowrap;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                          "
+                        >
+                          Card title loadofgjdaairo
+                        </h5>
+                        <p class="card-text m-0">1002 Chapters</p>
+                        <p class="card-text">
+                          <small class="text-body-secondary"
+                            >Last updated 3 mins ago</small
+                          >
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="card mb-3 border-0 border-bottom"
+                  style="max-width: 540px"
+                >
+                  <div class="row g-0">
+                    <div class="col-md-4">
+                      <img
+                        class="img-fluid object-fit-cover"
+                        src="./142.PNG"
+                        style="
+                          min-height: 100px;
+                          height: 100px;
+                          min-width: 100px;
+                          background-color: antiquewhite;
+                        "
+                        alt="loading..."
+                      />
+                    </div>
+                    <div class="col-md-8">
+                      <div class="card-body">
+                        <h5
+                          class="card-title"
+                          style="
+                            max-width: 200px;
+                            white-space: nowrap;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                          "
+                        >
+                          Card title loadofgjdaairo
+                        </h5>
+                        <p class="card-text m-0">1002 Chapters</p>
+                        <p class="card-text">
+                          <small class="text-body-secondary"
+                            >Last updated 3 mins ago</small
+                          >
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="bg-light rounded-4" id="detail-item-2">
+            <h4 class="m-3 py-3 text-uppercase border-bottom border-dark">
+              Danh sách chương
+            </h4>
+            <div class="container">
+              <ul
+                class="list-group list-group-flush gap-2"
+                style="overflow-y: auto; max-height: 500px"
+              >
+              @foreach(var chapter in @Model.Chapters.OrderByDescending(c => c.ChapterNumber)){
+<li
+                  class="list-group-item rounded-3 d-flex justify-content-between"
+                >
+                  <a asp-action="Chapter" asp-route-ComicId="@chapter.ComicId" asp-route-chapterId="@chapter.ChapterId" class="nav-link">Chapter @chapter.ChapterNumber</a>
+                  <small>@chapter.PublicDate.ToString("dd/MM/yyyy")</small>
+                </li>
+              }
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>

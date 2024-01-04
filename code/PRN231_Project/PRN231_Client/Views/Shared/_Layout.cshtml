@@ -1,0 +1,165 @@
+﻿@using PRN231_API.Models
+@{ 
+    var tabler = "https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css";
+    var user = HttpContextAccessor.HttpContext.Session.GetObjectFromJson<User>("user");
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - PRN231_Client</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/PRN231_Client.styles.css" asp-append-version="true" />
+        <link rel="stylesheet" href="@tabler" />
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <!-- Thêm thư viện toastr.js -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+</head>
+<body>
+  <header>
+    <nav
+      class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow sticky-top"
+    >
+      <div class="container-fluid">
+        <a
+          class="navbar-brand"
+          asp-area=""
+          asp-controller="Home"
+          asp-action="Index"
+          >Client</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target=".navbar-collapse"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div
+          class="navbar-collapse collapse d-sm-inline-flex justify-content-between"
+        >
+          <ul class="navbar-nav flex-grow-1">
+            <li class="nav-item">
+              <a
+                class="nav-link text-dark"
+                asp-area=""
+                asp-controller="Home"
+                asp-action="Index"
+                >Trang chủ</a>
+            </li>
+  <li class="nav-item ms-lg-3">
+              <div class="search navbar-text">
+                <button class="btnSearch">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="icon icon-tabler icon-tabler-search"
+                    width="20"
+                    height="20"
+                    viewBox="2 2 24 24"
+                    stroke-width="2"
+                    stroke="currentColor"
+                    fill="none"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                    <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path>
+                    <path d="M21 21l-6 -6"></path>
+                  </svg>
+                </button>
+                <input
+                  type="search"
+                  id="searchInput"
+                  placeholder="Tìm kiếm..."
+                />
+                <div class="position-relative">
+                  <ul
+                    class="bg-light p-4 rounded-3 d-none"
+                    style="
+                      list-style: none;
+                      max-height: 200px;
+                      overflow: auto;
+                      position: absolute;
+                      top: 100%;
+                      left: 0;
+                      right: 0;
+                      box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+                    "
+                    id="resultList"
+                  ></ul>
+                </div>
+              </div>
+            </li>
+          </ul>
+          <ul class="navbar-nav">
+              @if(user == null){
+              <li class="nav-item">
+              <a
+                class="nav-link text-dark"
+                asp-area=""
+                asp-controller="Home"
+                asp-action="Login"
+                
+             >Đăng nhập</a>
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link text-dark"
+                asp-area=""
+                asp-controller="Home"
+                asp-action="Register"
+                >Đăng ký</a>
+            </li>
+              }else{
+              <li class="nav-item">
+              <a
+                class="nav-link text-dark"
+                asp-area=""
+                asp-controller="User"
+                asp-action="Profile"
+                >Hello, @user.Email</a>
+            </li>
+              <li class="nav-item">
+              <a
+                class="nav-link text-dark"
+                asp-area=""
+                asp-controller="Home"
+                asp-action="Logout"
+                >Đăng xuất</a>
+            </li>
+                  <p></p>
+              }
+
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="Category px-5 py-2">
+      <ul id="categoryList" class="nav"></ul>
+    </div>
+  </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; @if(user != null){ <span id="userId">@user.UserId</span> } - PRN231_Client - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
